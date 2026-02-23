@@ -6,6 +6,7 @@ interface Props {
   startTime?: string | null
   onStart: () => void
   onStop: () => void
+  disabled?: boolean
 }
 
 export function formatDuration(totalSec: number): string {
@@ -21,7 +22,7 @@ export function formatDuration(totalSec: number): string {
   return `${s}s`
 }
 
-export default function Timer({ isRunning, totalSeconds, startTime, onStart, onStop }: Props) {
+export default function Timer({ isRunning, totalSeconds, startTime, onStart, onStop, disabled }: Props) {
   const [elapsed, setElapsed] = useState(0)
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
@@ -59,7 +60,13 @@ export default function Timer({ isRunning, totalSeconds, startTime, onStart, onS
       ) : (
         <button
           onClick={onStart}
-          className="px-3 py-1 text-xs font-medium bg-green-100 text-green-700 rounded-full hover:bg-green-200 transition"
+          disabled={disabled}
+          className={`px-3 py-1 text-xs font-medium rounded-full transition ${
+            disabled
+              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+              : 'bg-green-100 text-green-700 hover:bg-green-200'
+          }`}
+          title={disabled ? 'Timer disabled for completed tasks' : 'Start timer'}
         >
           Start
         </button>

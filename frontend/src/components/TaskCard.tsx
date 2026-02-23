@@ -198,6 +198,7 @@ export default function TaskCard({ task, onUpdate, onDelete }: Props) {
             startTime={activeStartTime}
             onStart={handleStart}
             onStop={handleStop}
+            disabled={task.status === 'done'}
           />
           <div className="flex gap-1">
             <button
